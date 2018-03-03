@@ -1,22 +1,22 @@
+import React from 'react';
+import {Switch, Route} from 'react-router-dom';
+import {connect} from 'react-redux';
+import HomePage from "./Page/home";
+import LogPage from "./Page/log";
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+class App extends React.Component {
+    render() {
+        return (
+            <div className="app">
+                <div className="page-container">
+                    <Switch>
+                        <Route path="/log" component={LogPage}/>
+                        <Route component={HomePage}/>
+                    </Switch>
+                </div>
+            </div>
+        );
+    }
+}
 
-require('./bootstrap');
-
-window.Vue = require('vue');
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
-const app = new Vue({
-    el: '#app'
-});
+export default connect(null, null)(App);
