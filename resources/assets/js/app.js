@@ -1,19 +1,17 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
-import HomePage from "./Page/home";
-import LogPage from "./Page/log";
+import HomePage from "./page/home";
+import LoginContainer from "./form/LoginContainer";
 
 class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <div className="page-container">
                     <Switch>
-                        <Route path="/log" component={LogPage}/>
+                        <Route path="/login" component={LoginContainer}/>
                         <Route component={HomePage}/>
                     </Switch>
-                </div>
             </div>
         );
     }
