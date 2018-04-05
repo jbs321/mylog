@@ -35,7 +35,7 @@ class State extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{width:300,position:"fixed", bottom:5, left: 5}}>
                 {this.renderProps()}
             </div>
         );
