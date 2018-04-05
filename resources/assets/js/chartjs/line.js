@@ -4,13 +4,12 @@ import {Line} from 'react-chartjs-2';
 export default class LineChart extends React.Component {
 
     render() {
-        console.log(this.props.data);
-
         const {data, labels, label} =  this.props;
 
         if(data == undefined) {
             throw new Error("Missing Data")
         }
+
         if(data.length == 0) {
             return <div>Loading...</div>
         }

@@ -26,8 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $logs = SugarLevelLog::orderBy('created_at', 'desc')->get();
+        $logs = SugarLevelLog::orderBy('created_at')->get();
 
-        return new JsonResponse($logs);
+        return new JsonResponse([1,2,3]);
     }
 }

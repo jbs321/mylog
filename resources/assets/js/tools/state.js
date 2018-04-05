@@ -27,15 +27,22 @@ class State extends React.Component {
 
         return (
             <table style={style}>
-                <tr><th>Key</th><th>Value</th></tr>
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                </tr>
+                </thead>
+                <tbody>
                 {listItems}
+                </tbody>
             </table>
         );
     }
 
     render() {
         return (
-            <div style={{width:300,position:"fixed", bottom:5, left: 5}}>
+            <div style={{width: 300, maxHeight:500,overflowY:"scroll", position: "fixed", bottom: 5, left: 5}}>
                 {this.renderProps()}
             </div>
         );

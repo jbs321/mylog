@@ -28,11 +28,14 @@ class User extends Authenticatable
         'id','password', 'remember_token',
     ];
 
-    /**
-     * Get the comments for the blog post.
-     */
-    public function sugarLogs()
+
+    public function logs()
     {
-        return $this->hasMany('App\SugarLevelLog');
+        return $this->hasMany('App\Log');
+    }
+
+    public function logLabels()
+    {
+        return $this->hasMany('App\LogLabel');
     }
 }
