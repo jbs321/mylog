@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            SugarLevelLogTableSeeder::class,
+            UserLogTableSeeder::class,
+            LogLabelTableSeeder::class,
         ]);
     }
 }

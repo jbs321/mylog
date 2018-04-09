@@ -22,7 +22,6 @@ Route::middleware(['auth:api'])->group(function () {
         return new \Illuminate\Http\JsonResponse([1,2,3,4]);
     });
 
-    Route::post('/chart/sugar', 'HomeController@index');
 });
 
 
