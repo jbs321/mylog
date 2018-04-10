@@ -60,7 +60,6 @@ class State extends React.Component {
             <div style={style}>
                 <button onClick={this.toggleView.bind(this)}>{this.state.open ? "close" : "open"}</button>
                 {this.renderProps()}
-                {this.state.open ? "Its Open" : "its Closed"}
             </div>
         );
     }
