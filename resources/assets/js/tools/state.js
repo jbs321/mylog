@@ -54,8 +54,8 @@ class State extends React.Component {
     }
 
     render() {
-        const botton = this.state.open ? 5 : -470;
-        const style = {width: 300, height:500,overflowY:"scroll", position: "fixed", bottom: botton, left: 5, backgroundColor:'grey'};
+        const bottom = this.state.open ? 5 : -470;
+        const style = {width: 300, height:500,overflowY:"scroll", position: "fixed", bottom: bottom, left: 5, backgroundColor:'grey'};
         return (
             <div style={style}>
                 <button onClick={this.toggleView.bind(this)}>{this.state.open ? "close" : "open"}</button>
