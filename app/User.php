@@ -29,9 +29,13 @@ class User extends Authenticatable
     ];
 
 
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function logs()
     {
-        return $this->hasMany('App\Log');
+        return $this->hasMany('App\UserLog');
     }
 
     public function logLabels()

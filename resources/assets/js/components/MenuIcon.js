@@ -4,34 +4,42 @@ import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-mo
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import {connect} from "react-redux";
+import Spinner from "./Spinner";
+
+export const style = {display: "table-cell", verticalAlign: "middle"};
 
 class MenuIcon extends React.Component {
-    render() {
-        const {name} = this.props.user;
+
+    renderWelcomeMsg() {
+        let name = this.props.user.name;
 
         if (name == undefined) {
-            return <div>Loading...</div>;
+            name = null;
         }
 
-        const style = {display: "table-cell", verticalAlign: "middle"};
+        return <div style={style}>Welcome {name}</div>;
+    }
 
+    static renderMenuBtn() {
+        return <div style={style}>
+            <IconMenu
+                iconButtonElement={
+                    <IconButton touch={true}>
+                        <NavigationExpandMoreIcon/>
+                    </IconButton>
+                }>
+
+                <MenuItem primaryText="Profile"/>
+            </IconMenu>
+        </div>
+    }
+
+    render() {
         return (
             <div className={"menu-icon"} style={{display: "table"}}>
                 <div className={"menu-icon-row"} style={{display: "table-row"}}>
-                    <div style={style}>Welcome {name}</div>
-                    <div style={style}>
-                        <IconMenu
-                            iconButtonElement={
-                                <IconButton touch={true}>
-                                    <NavigationExpandMoreIcon/>
-                                </IconButton>
-                            }>
-
-                            <MenuItem primaryText="Profile"/>
-                            <MenuItem primaryText="Messages"/>
-                            <MenuItem primaryText="Dashboard"/>
-                        </IconMenu>
-                    </div>
+                    {this.renderWelcomeMsg()}
+                    {MenuIcon.renderMenuBtn()}
                 </div>
             </div>
         );

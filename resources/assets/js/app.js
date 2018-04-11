@@ -11,6 +11,7 @@ class App extends React.Component {
     componentDidMount() {
         this.props.fetchAuth();
     }
+
     render() {
         const {isAuth} = this.props;
         return (

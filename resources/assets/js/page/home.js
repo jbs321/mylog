@@ -1,14 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import CustomToolbar from '../components/CustomToolbar';
-import SugarStatistics from '../components/SugarStatistics';
+import UserLogPanel from '../components/UserLogPanel';
 
 class HomePage extends React.Component {
     render() {
         return (
             <div className={"container-fluid"} style={{padding: 0}}>
                 <CustomToolbar/>
-                <SugarStatistics/>
+                <UserLogPanel id={'sdas'}/>
             </div>
         );
     }

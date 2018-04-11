@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\UserLog;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 

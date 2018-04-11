@@ -18,11 +18,7 @@ Route::middleware(['auth:api'])->group(function () {
         return $request->user();
     });
 
-    Route::post('/userX', function (Request $request) {
-        return new \Illuminate\Http\JsonResponse([1,2,3,4]);
+    Route::prefix('/logs')->group(function () {
+        Route::resource('/user_log', 'LogController');
     });
-
 });
-
-
-
