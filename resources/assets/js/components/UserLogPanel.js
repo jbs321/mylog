@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {getUserLog, createUserLog} from '../actions/UserLog'
+import {getUserLog, createUserLog, deleteUserLog} from '../actions/UserLog'
 import CustomCard from '../presentation/CustomCard';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import _ from 'lodash';
+import CustomChip from "./CustomChip";
 
 class UserLogPanel extends React.Component {
 
@@ -15,6 +16,9 @@ class UserLogPanel extends React.Component {
         this.state.post_text = "";
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
     componentDidMount() {
@@ -34,24 +38,35 @@ class UserLogPanel extends React.Component {
         return (
             <div>
                 <Card>
-                    <CardHeader title="Log"/>
                     <CardText>
                         <TextField
                             name={"post_text"}
                             id={"post_text"}
-                            rows={2}
                             style={{width: "100%"}}
                             value={this.state.post_text}
                             rowsMax={4}
+                            hintText="Say Something..."
                             onChange={this.handleChange}
                             multiLine={true}/>
                     </CardText>
                     <CardActions>
-                        <FlatButton label="Post" onClick={this.handleClick.bind(this)}/>
+                        <FlatButton label="Post" onClick={this.handleClick}/>
                     </CardActions>
                 </Card>
             </div>
         );
+    }
+
+    handleDelete(logId) {
+        if(logId == undefined) {
+            return false;
+        }
+
+        this.props.deleteUserLog(logId);
+    }
+
+    handleEdit() {
+
     }
 
     handleChange(evt) {
@@ -77,7 +92,6 @@ class UserLogPanel extends React.Component {
             return ul;
         }
 
-
         _.each(userLogs, (log, idx) => {
             const labels = log.labels.map((label) => {
                 return label.description;
@@ -86,7 +100,12 @@ class UserLogPanel extends React.Component {
             let subTitle = labels.join(",");
 
             ul.push(
-                <CustomCard title={log.created_at} text={log.description} key={idx} subTitle={subTitle}/>
+                <CustomCard title={log.created_at}
+                            logId={log.id}
+                            text={log.description}
+                            key={idx}
+                            subTitle={subTitle}
+                            handleDelete={this.handleDelete}/>
             );
         });
 
@@ -98,4 +117,4 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, {getUserLog, createUserLog})(UserLogPanel)
+export default connect(mapStateToProps, {getUserLog, createUserLog, deleteUserLog})(UserLogPanel)

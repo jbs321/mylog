@@ -8,7 +8,7 @@ class HomePage extends React.Component {
         return (
             <div className={"container-fluid"} style={{padding: 0}}>
                 <CustomToolbar/>
-                <UserLogPanel id={'sdas'}/>
+                <UserLogPanel/>
             </div>
         );
     }

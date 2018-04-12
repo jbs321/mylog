@@ -20,6 +20,7 @@ export const ROUTE__DELETE_LOG = "api/logs/user_log/";
 export function createUserLog(description, cb = undefined) {
     const postData = {description};
 
+
     const request = axios({
         method: "POST",
         url: ROUTE__CREATE_LOG,
@@ -60,6 +61,6 @@ export function deleteUserLog(id) {
 
     return {
         type: DELETE_USER_LOG,
-        payload: request
+        payload: id
     }
 }

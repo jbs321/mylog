@@ -10,14 +10,17 @@ export default function (state = {}, action) {
             }
 
             return state;
+
         case GET_USER_LOG:
             return (action.payload) ? _.sortBy(_.keyBy(action.payload.data, 'id'), [(log) => {return log.created_at}]).reverse() : state;
 
         case DELETE_USER_LOG:
-            _.unset(state, action.payload)
-            return state;
+            const id = action.payload;
+            return _.filter(state, (log) =>  {
+                return id !== log.id;
+            });
 
-        default: //dsadas
+        default:
             return state;
     }
 }
