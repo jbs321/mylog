@@ -12,7 +12,10 @@
 */
 
 
-//Auth::routes();
+
+Route::get('/test', function (Request $request) {
+    return  Storage::download('app/test.jpg');
+});
 
 
 Route::get( '/{any}', function () {

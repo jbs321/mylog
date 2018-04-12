@@ -6,7 +6,6 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import _ from 'lodash';
-import CustomChip from "./CustomChip";
 
 class UserLogPanel extends React.Component {
 
