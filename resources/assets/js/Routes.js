@@ -1,7 +1,7 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import HomePage from "./page/home";
-import LoginContainer from "./form/LoginContainer";
+import LoginContainer from "./form/Login";
 import ProfilePage from "./page/ProfilePage";
 
 export default class Routes extends React.Component {

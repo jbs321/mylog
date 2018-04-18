@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fetchAuth} from "../actions/Auth";
-import LoginContainer from "../form/LoginContainer";
+import Login from "../form/Login";
 import {Switch, Route} from 'react-router-dom';
 import Welcome from "../page/welcome";
 
@@ -16,7 +16,7 @@ class AuthBoundary extends React.Component {
         if (!isAuth) {
             return (
                 <Switch>
-                    <Route path="/login" component={LoginContainer}/>
+                    <Route path="/login" component={Login}/>
                     <Route exact path="/" component={Welcome}/>
                 </Switch>
             );

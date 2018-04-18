@@ -14,7 +14,7 @@ const style = {
     margin: 12,
 };
 
-class LoginContainer extends React.Component {
+class Login extends React.Component {
     renderField(field) {
         const {meta: {touched, error}} = field;
         const className = `form-group ${touched && error ? 'has-danger' : ""}`;
@@ -96,5 +96,5 @@ export default reduxForm({
     validate,
     form: 'LoginForm'
 })(
-    connect(mapStateToProps, {login, fetchAuth})(LoginContainer)
+    connect(mapStateToProps, {login, fetchAuth})(Login)
 );

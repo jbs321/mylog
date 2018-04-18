@@ -12,11 +12,7 @@
 */
 
 
-
-Route::get('/test', function (Request $request) {
-    return  Storage::download('app/test.jpg');
-});
-
+Route::get('/profile/{name}', 'ProfileImageController@index');
 
 Route::get( '/{any}', function () {
     return view('welcome');
