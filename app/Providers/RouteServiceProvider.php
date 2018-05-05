@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\UserLog;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,9 +25,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::bind('user_log', function ($value) {
+            return UserLog::where('id', Crypt::decryptString($value))->first() ?? abort(404);
+        });
     }
 
     /**

@@ -12,7 +12,7 @@
 */
 
 
-/*Auth::routes();*/
+Route::get('/profile/{name}', 'ProfileImageController@index');
 
 Route::get( '/{any}', function () {
     return view('welcome');

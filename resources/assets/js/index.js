@@ -9,8 +9,9 @@ import reducers from './reducers';
 import {createStore, applyMiddleware} from 'redux';
 import history from './history';
 import App from "./app";
-import ErrorBoundary from "./components/ErrorBoundary";
 import _ from 'lodash';
+
+// process.env.ENV.VARIABLE
 
 /**
  * Set global setting for Axios
@@ -20,7 +21,7 @@ axios.defaults.baseURL = process.env.ENV.API_URL;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-if(_.has(localStorage,'token_type') && _.has(localStorage,'access_token')) {
+if (_.has(localStorage, 'token_type') && _.has(localStorage, 'access_token')) {
     axios.defaults.headers.common['Authorization']
         = localStorage.getItem('token_type') + " " + localStorage.getItem('access_token');
 }
@@ -32,9 +33,7 @@ ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
         <MuiThemeProvider>
             <Router history={history}>
-                <ErrorBoundary>
-                    <App/>
-                </ErrorBoundary>
+                <App/>
             </Router>
         </MuiThemeProvider>
     </Provider>, document.getElementById('root'));

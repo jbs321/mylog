@@ -6,6 +6,19 @@ export const style = {
 };
 
 class State extends React.Component {
+    constructor() {
+        super();
+        this.state = {};
+        this.state.open = false;
+    }
+
+    toggleView() {
+        const {open} = this.state;
+        this.setState({
+            open: !open
+        });
+    }
+
     renderProps() {
         let listItems = [];
         let items = JSON.stringify(this.props);
@@ -41,8 +54,11 @@ class State extends React.Component {
     }
 
     render() {
+        const bottom = this.state.open ? 5 : -470;
+        const style = {width: 300, height:500,overflowY:"scroll", position: "fixed", bottom: bottom, left: 5, backgroundColor:'grey'};
         return (
-            <div style={{width: 300, maxHeight:500,overflowY:"scroll", position: "fixed", bottom: 5, left: 5}}>
+            <div style={style}>
+                <button style={{position: "absolute", top: 0}} onClick={this.toggleView.bind(this)}>{this.state.open ? "close" : "open"}</button>
                 {this.renderProps()}
             </div>
         );
