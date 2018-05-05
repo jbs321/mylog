@@ -13,17 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware(['auth:api'])->group(function () {
-    Route::post('/user', function (Request $request) {
-        return $request->user();
-    });
 
-    Route::post('/userX', function (Request $request) {
-        return new \Illuminate\Http\JsonResponse([1,2,3,4]);
-    });
+Route::post('/user', function (Request $request) {
+    return new \Illuminate\Http\JsonResponse($request->user());
 
-    Route::post('/chart/sugar', 'HomeController@index');
-});
-
-
-
+})->middleware(['auth:api']);

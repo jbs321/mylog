@@ -16,9 +16,5 @@ class DatabaseSeeder extends Seeder
             'email' => 'jacob@balabanov.ca',
             'password' => bcrypt('Aa123456'),
         ]);
-
-        $this->call([
-            SugarLevelLogTableSeeder::class,
-        ]);
     }
 }
