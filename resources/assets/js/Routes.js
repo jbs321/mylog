@@ -8,7 +8,6 @@ export default class Routes extends React.Component {
     render() {
         return (
             <Switch>
-                <Route path="/login" component={LoginContainer}/>
                 <Route path="/profile" component={ProfilePage}/>
                 <Route exact path="/" component={HomePage}/>
             </Switch>

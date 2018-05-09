@@ -42,4 +42,11 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\LogLabel');
     }
+
+
+    public function posts()
+    {
+        return $this->hasMany('App\Post')
+                    ->orderByDesc(Post::FIELD__CREATED_AT);
+    }
 }

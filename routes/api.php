@@ -19,7 +19,7 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
     Route::post('/userX', function (Request $request) {
-        return new \Illuminate\Http\JsonResponse([1,2,3,4]);
+        return new \Illuminate\Http\JsonResponse([1, 2, 3, 4]);
     });
 
     Route::prefix('/logs')->group(function () {
@@ -27,6 +27,13 @@ Route::middleware(['auth:api'])->group(function () {
     });
 
     Route::post('/chart/sugar', 'HomeController@index');
+
+
+    Route::get('posts/{post}', 'PostController@findByPost');
+    Route::post('posts/{post}', 'PostController@update');
+    Route::get('/user/posts', 'PostController@findAllByUser');
+    Route::put('post/store', 'PostController@store');
+    Route::delete('posts/{post}/delete', 'PostController@destroy');
 });
 
 
