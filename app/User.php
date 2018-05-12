@@ -47,6 +47,6 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany('App\Post')
-                    ->orderByDesc(Post::FIELD__CREATED_AT);
+                    ->orderByDesc(Post::FIELD__UPDATED_AT);
     }
 }

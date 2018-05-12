@@ -1,4 +1,5 @@
 import axios from "axios/index";
+
 let qs = require('qs');
 
 /**
@@ -6,6 +7,8 @@ let qs = require('qs');
  */
 export const GET_USER_POSTS = 'get_user_log';
 export const POST_CREATE_POST = 'post_create_post';
+export const DELETE_CREATE_POST = 'delete_create_post';
+export const UPDATE_POST = 'update_post';
 
 export function findAllByUser() {
     const request = axios({
@@ -30,6 +33,31 @@ export function createUserPost(post) {
 
     return {
         type: POST_CREATE_POST,
+        payload: request
+    }
+}
+
+export function deletePost(postId) {
+    const request = axios({
+        method: "DELETE",
+        url: `/api/posts/${postId}/delete`
+    });
+
+    return {
+        type: DELETE_CREATE_POST,
+        payload: postId
+    }
+}
+
+export function updatePost(postId, data) {
+    const request = axios({
+        method: "POST",
+        url: `/api/posts/${postId}`,
+        data: qs.stringify(data)
+    });
+
+    return {
+        type: UPDATE_POST,
         payload: request
     }
 }
