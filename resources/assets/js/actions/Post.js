@@ -1,11 +1,13 @@
 import axios from "axios/index";
+import Pagination, {NEXT_PAGE_URL} from "../dataset/pagination";
 
 let qs = require('qs');
 
 /**
  * Action Keys
  */
-export const GET_USER_POSTS = 'get_user_log';
+export const GET_USER_POSTS = 'get_user_posts';
+export const GET_NEXT_POSTS = 'get_next_posts';
 export const POST_CREATE_POST = 'post_create_post';
 export const DELETE_CREATE_POST = 'delete_create_post';
 export const UPDATE_POST = 'update_post';
@@ -18,6 +20,22 @@ export function findAllByUser() {
 
     return {
         type: GET_USER_POSTS,
+        payload: request
+    }
+}
+
+export function findNextPagination(pagination) {
+    if(!pagination instanceof Pagination) {
+        throw new Error('Wrong Type for parameter');
+    }
+
+    const request = axios({
+        method: "GET",
+        url: pagination[NEXT_PAGE_URL],
+    });
+
+    return {
+        type: GET_NEXT_POSTS,
         payload: request
     }
 }

@@ -1,13 +1,29 @@
 import _ from 'lodash';
-import {DELETE_CREATE_POST, GET_USER_POSTS, POST_CREATE_POST, UPDATE_POST} from '../actions/Post';
+import Pagination from '../dataset/pagination';
+import {
+    DELETE_CREATE_POST,
+    GET_USER_POSTS,
+    POST_CREATE_POST,
+    UPDATE_POST,
+    GET_NEXT_POSTS
+} from '../actions/Post';
 
-export default function (state = {}, action) {
+export default function (state = [], action) {
     switch (action.type) {
         case GET_USER_POSTS:
             if (action.payload.data) {
-                let sorted = _.sortBy(action.payload.data.data, 'updated_at').reverse();
-                let mapped = _.keyBy(sorted, 'id');
-                return mapped;
+                return [
+                    new Pagination(action.payload.data)
+                ];
+            }
+
+            break;
+
+        case GET_NEXT_POSTS:
+            if (action.payload.data) {
+                let newState = _.assign([], state);
+                newState.push(new Pagination(action.payload.data))
+                return newState;
             }
 
             break;

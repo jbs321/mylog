@@ -33,7 +33,6 @@ class Post extends React.Component {
     }
 
     renderText() {
-        console.log(this);
         const {content} = this.state;
 
         if (this.state.isEditable) {
