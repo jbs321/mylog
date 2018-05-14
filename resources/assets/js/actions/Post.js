@@ -1,5 +1,5 @@
 import axios from "axios/index";
-import Pagination, {NEXT_PAGE_URL} from "../dataset/pagination";
+import Pagination, {NEXT_PAGE_URL, CURRENT_PAGE, LAST_PAGE} from "../dataset/pagination";
 
 let qs = require('qs');
 
@@ -25,13 +25,14 @@ export function findAllByUser() {
 }
 
 export function findNextPagination(pagination) {
-    if(!pagination instanceof Pagination) {
+    if (pagination !== undefined
+            && !pagination instanceof Pagination) {
         throw new Error('Wrong Type for parameter');
     }
 
     const request = axios({
         method: "GET",
-        url: pagination[NEXT_PAGE_URL],
+        url: pagination.next_page_url,
     });
 
     return {

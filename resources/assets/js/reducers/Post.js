@@ -22,7 +22,7 @@ export default function (state = [], action) {
         case GET_NEXT_POSTS:
             if (action.payload.data) {
                 let newState = _.assign([], state);
-                newState.push(new Pagination(action.payload.data))
+                newState.unshift(new Pagination(action.payload.data));
                 return newState;
             }
 

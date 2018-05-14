@@ -39,7 +39,6 @@ class PostList extends React.Component {
             });
         });
 
-
         return ul;
     }
 
@@ -52,7 +51,10 @@ class PostList extends React.Component {
         const wrappedElement = document.getElementById('dashboard-container');
 
         if (this.isBottom(wrappedElement)) {
-            this.props.findNextPagination(posts[posts.length -1 ]);
+            let last = posts.shift();
+            if( last !== undefined && last.current_page < last.last_page) {
+                this.props.findNextPagination(last);
+            }
         }
     };
 }
