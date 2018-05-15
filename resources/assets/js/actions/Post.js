@@ -24,7 +24,7 @@ export function findAllByUser() {
     }
 }
 
-export function findNextPagination(pagination) {
+export function findNextPagination(pagination, cb) {
     if (pagination !== undefined
             && !pagination instanceof Pagination) {
         throw new Error('Wrong Type for parameter');
@@ -34,6 +34,8 @@ export function findNextPagination(pagination) {
         method: "GET",
         url: pagination.next_page_url,
     });
+
+    request.then((result) => cb(result));
 
     return {
         type: GET_NEXT_POSTS,

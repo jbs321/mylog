@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import CustomToolbar from '../components/CustomToolbar';
-import Dashboard from "../components/dashboard/dashboard";
+import Dashboard from "../components/dashboard/Dashboard";
 
 class HomePage extends React.Component {
     render() {

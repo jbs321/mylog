@@ -26,39 +26,37 @@ export default function (state = [], action) {
                 return newState;
             }
 
-            break;
-        case POST_CREATE_POST:
-            if (action.payload.data) {
-                let assign = _.assign({[action.payload.data.id]: action.payload.data}, state);
-                let sorted = _.sortBy(assign, 'updated_at').reverse();
-                let mapped = _.keyBy(sorted, 'id');
-
-                return mapped;
-            }
-
-            break;
-
-        case DELETE_CREATE_POST:
-            if (action.payload) {
-                let postId = action.payload;
-                let newState = _.assign({}, state);
-                console.log(postId);
-                _.unset(newState, postId);
-
-                return newState;
-            }
-            break;
-
-        case UPDATE_POST:
-            if (action.payload) {
-                let postId = action.payload;
-                let newState = _.assign({}, state);
-                console.log(postId);
-                _.unset(newState, postId);
-
-                return newState;
-            }
-            break;
+    //         break;
+    //     case POST_CREATE_POST:
+    //         if (action.payload.data) {
+    //             let assign = _.assign({[action.payload.data.id]: action.payload.data}, state);
+    //             let sorted = _.sortBy(assign, 'updated_at').reverse();
+    //             let mapped = _.keyBy(sorted, 'id');
+    //
+    //             return mapped;
+    //         }
+    //
+    //         break;
+    //
+    //     case DELETE_CREATE_POST:
+    //         if (action.payload) {
+    //             let postId = action.payload;
+    //             let newState = _.assign({}, state);
+    //             _.unset(newState, postId);
+    //
+    //             return newState;
+    //         }
+    //         break;
+    //
+    //     case UPDATE_POST:
+    //         if (action.payload) {
+    //             let postId = action.payload;
+    //             let newState = _.assign({}, state);
+    //             _.unset(newState, postId);
+    //
+    //             return newState;
+    //         }
+    //         break;
     }
 
     return state;

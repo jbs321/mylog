@@ -13,8 +13,6 @@ export default class App extends React.Component {
                         <Routes/>
                     </AuthBoundary>
                 </ErrorBoundary>
-
-                <State/>
             </div>
         );
     }

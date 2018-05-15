@@ -48,11 +48,6 @@ export default class Pagination {
             throw new Error(`Attribute ${DATA} is missing in class`);
         }
 
-        // let sorted = _.sortBy(this[DATA], 'updated_at').reverse();
         this[DATA] = _.keyBy(this[DATA], 'id');
-    }
-
-    getData() {
-        return this[this[DATA]];
     }
 }
