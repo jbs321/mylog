@@ -39,14 +39,13 @@ class PostController extends Controller
     {
         $post->fill($request->all());
         $post->save();
-        return new JsonResponse(['Resource updated successfully']);
+        return new JsonResponse($post);
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
-
-        return new JsonResponse(['Resource deleted successfully']);
+        return new JsonResponse($post);
     }
 }
 

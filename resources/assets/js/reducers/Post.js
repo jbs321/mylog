@@ -8,55 +8,64 @@ import {
     GET_NEXT_POSTS
 } from '../actions/Post';
 
-export default function (state = [], action) {
+export default function (state = {}, action) {
     switch (action.type) {
         case GET_USER_POSTS:
             if (action.payload.data) {
-                return [
-                    new Pagination(action.payload.data)
-                ];
+                const {data} = action.payload;
+                return {
+                    current_page: data.current_page,
+                    list: _.keyBy(data.data, 'id'),
+                    pages: {
+                        [data.current_page]: new Pagination(data)
+                    }
+                }
             }
 
             break;
 
         case GET_NEXT_POSTS:
             if (action.payload.data) {
-                let newState = _.assign([], state);
-                newState.unshift(new Pagination(action.payload.data));
+                const {data} = action.payload;
+                let newState = _.assign({}, state);
+
+                newState.current_page = data.current_page;
+                newState.list = _.assign(newState.list, _.keyBy(data.data, 'id'));
+                newState.pages = _.assign({[data.current_page]: new Pagination(data)}, newState.pages);
+
                 return newState;
             }
 
-    //         break;
-    //     case POST_CREATE_POST:
-    //         if (action.payload.data) {
-    //             let assign = _.assign({[action.payload.data.id]: action.payload.data}, state);
-    //             let sorted = _.sortBy(assign, 'updated_at').reverse();
-    //             let mapped = _.keyBy(sorted, 'id');
-    //
-    //             return mapped;
-    //         }
-    //
-    //         break;
-    //
-    //     case DELETE_CREATE_POST:
-    //         if (action.payload) {
-    //             let postId = action.payload;
-    //             let newState = _.assign({}, state);
-    //             _.unset(newState, postId);
-    //
-    //             return newState;
-    //         }
-    //         break;
-    //
-    //     case UPDATE_POST:
-    //         if (action.payload) {
-    //             let postId = action.payload;
-    //             let newState = _.assign({}, state);
-    //             _.unset(newState, postId);
-    //
-    //             return newState;
-    //         }
-    //         break;
+            break;
+        case POST_CREATE_POST:
+            if (action.payload.data) {
+                const {data} = action.payload;
+                let newState = _.assign({}, state);
+                newState.list =  _.assign({[data.id]: data}, newState.list);
+
+                return newState;
+            }
+
+            break;
+
+            case DELETE_CREATE_POST:
+                if (action.payload) {
+                    let id = action.payload;
+                    let newState = _.assign({}, state);
+
+                    _.unset(newState.list, id);
+
+                    return newState;
+                }
+                break;
+
+            case UPDATE_POST:
+                if (action.payload) {
+                    let newState = _.assign({}, state);
+
+                    return newState;
+                }
+                break;
     }
 
     return state;

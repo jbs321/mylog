@@ -1,10 +1,9 @@
 import React from 'react';
-import PostList from './PostList';
 import _ from 'lodash';
 import {connect} from 'react-redux';
 import {findNextPagination} from '../../actions/Post';
 
-export function PostListWithPagination() {
+export function WithPagination(ComponenetList) {
     class PostListPagination extends React.Component {
         constructor() {
             super();
@@ -14,15 +13,14 @@ export function PostListWithPagination() {
             this.state.isLoading = false;
             this.state.current = false;
 
-            this.next = this.next.bind(this);
+            this.next        = this.next.bind(this);
             this.loadMoreBtn = this.loadMoreBtn.bind(this);
-            this.spinner = this.spinner.bind(this);
+            this.spinner     = this.spinner.bind(this);
             // this.onScroll = this.onScroll.bind(this);
         }
 
         shouldComponentUpdate() {
             const {isAllLoaded} = this.state;
-
             return !isAllLoaded;
         }
 
@@ -75,6 +73,10 @@ export function PostListWithPagination() {
             return null;
         }
 
+        handleScroll() {
+            console.log("handle scroll in WithPagination hahahahha");
+        }
+
         render() {
             let recordList = [];
             const {posts} = this.props;
@@ -91,7 +93,7 @@ export function PostListWithPagination() {
 
             return (
                 <div>
-                    <PostList list={recordList}/>
+                    <ComponenetList list={recordList}/>
                     {this.loadMoreBtn()}
                     {this.spinner()}
                 </div>

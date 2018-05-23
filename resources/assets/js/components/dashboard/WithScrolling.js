@@ -1,10 +1,16 @@
 import React from 'react';
+import _ from "lodash";
 
-export function withScroll(Component) {
-    class WithScroll extends React.Component {
+export function withScroll(ComponentList) {
+    class ListWithScroll extends React.Component {
         constructor() {
             super();
+
+            this.state = {};
+            this.state.isAllLoaded = false;
+
             this.onScroll = this.onScroll.bind(this);
+            this.onLoad = this.onLoad.bind(this);
         }
 
         componentDidMount() {
@@ -15,19 +21,47 @@ export function withScroll(Component) {
             window.removeEventListener('scroll', this.onScroll, false);
         }
 
+        shouldComponentUpdate() {
+            //If isAllLoaded == true : don't try and load more data.
+            return !this.state.isAllLoaded;
+        }
+
+        onLoad() {
+            const {isAllLoaded, loadNext} = this.props;
+
+
+            if (isAllLoaded !== undefined && !isAllLoaded) {
+                loadNext();
+            }
+        }
+
         onScroll() {
-            console.log(Component);
-            // const {list, handleScroll} = this.props;
-            //
-            // if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 500) && posts.length) {
-            //     handleScroll();
-            // }
+            let offsetHeight = document.querySelector('#with-scroll-wrapper').offsetHeight;
+
+            if (window.innerHeight + window.scrollY >= offsetHeight) {
+                this.onLoad();
+            }
         }
 
         render() {
-            return <Component {...this.props} />;
+            let arrayList = [];
+
+            const {posts: {list}, pagination} = this.props;
+
+            if (pagination !== undefined
+                && list !== undefined
+                && pagination) {
+
+                arrayList = list;
+            }
+
+            return (
+                <div className={"with-scroll-wrapper"} id={"with-scroll-wrapper"}>
+                    <ComponentList posts={arrayList}/>
+                </div>
+            );
         }
     }
 
-    return WithScroll;
+    return ListWithScroll;
 }

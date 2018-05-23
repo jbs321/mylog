@@ -10,13 +10,20 @@ import Post from './Post';
  */
 class PostList extends React.Component {
     render() {
-        const {list} = this.props;
-        return list.map((post) => {
-            return <Post postId={post.id}
-                         content={post.content}
-                         key={post.id}
-                         subTitle={post.updated_at}/>
+        let list      = [];
+        const {posts} = this.props;
+
+        if(posts === undefined) {
+            return null;
+        }
+
+        _.each(posts, (post) => {
+            list.unshift(
+                <Post key={post.id} {...post}/>
+            );
         });
+
+        return list;
     }
 }
 

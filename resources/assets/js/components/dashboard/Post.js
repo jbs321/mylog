@@ -36,13 +36,13 @@ class Post extends React.Component {
         const {content} = this.state;
 
         if (this.state.isEditable) {
-            const {postId} = this.props;
+            const {id} = this.props;
 
             return (
                 <div>
                     <TextField
-                        name={`post-${postId}`}
-                        id={`post-${postId}`}
+                        name={`post-${id}`}
+                        id={`post-${id}`}
                         style={{width: "100%"}}
                         value={this.state.content}
                         multiLine={true}
@@ -72,15 +72,15 @@ class Post extends React.Component {
     }
 
     onDelete() {
-        const {deletePost, postId} = this.props;
+        const {deletePost, id} = this.props;
 
-        deletePost(postId);
+        deletePost(id);
     }
 
     onSave() {
-        const {postId, updatePost} = this.props;
+        const {id, updatePost} = this.props;
 
-        updatePost(postId, {
+        updatePost(id, {
             content: this.state.content
         });
 
@@ -88,7 +88,7 @@ class Post extends React.Component {
     }
 
     render() {
-        const {title, subTitle, postId} = this.props;
+        const {title, subTitle, id} = this.props;
 
         return (
             <Card style={{padding: 10, margin: 10, position: "relative"}}>
@@ -103,7 +103,7 @@ class Post extends React.Component {
                 </IconMenu>
 
                 <CardHeader
-                    id={postId}
+                    id={id}
                     title={title}
                     subtitle={subTitle}
                 >
