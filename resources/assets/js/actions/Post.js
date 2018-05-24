@@ -66,14 +66,14 @@ export function deletePost(postId) {
 
     return {
         type: DELETE_CREATE_POST,
-        payload: postId
+        payload: request
     }
 }
 
-export function updatePost(postId, data) {
+export function updatePost(id, data) {
     const request = axios({
         method: "POST",
-        url: `/api/posts/${postId}`,
+        url: `/api/posts/${id}`,
         data: qs.stringify(data)
     });
 

@@ -41,31 +41,34 @@ export default function (state = {}, action) {
             if (action.payload.data) {
                 const {data} = action.payload;
                 let newState = _.assign({}, state);
-                newState.list =  _.assign({[data.id]: data}, newState.list);
+                newState.list = _.assign({[data.id]: data}, newState.list);
 
                 return newState;
             }
 
             break;
 
-            case DELETE_CREATE_POST:
-                if (action.payload) {
-                    let id = action.payload;
-                    let newState = _.assign({}, state);
+        case DELETE_CREATE_POST:
+            if (action.payload) {
+                const {data: {id}} = action.payload;
+                let newState = _.assign({}, state);
 
-                    _.unset(newState.list, id);
+                _.unset(newState.list, id);
 
-                    return newState;
-                }
-                break;
+                return newState;
+            }
+            break;
 
-            case UPDATE_POST:
-                if (action.payload) {
-                    let newState = _.assign({}, state);
+        case UPDATE_POST:
+            if (action.payload.data) {
+                const {data: {id}} = action.payload;
+                let newState = _.assign({}, state);
 
-                    return newState;
-                }
-                break;
+                newState.list[id] = action.payload.data;
+
+                return newState;
+            }
+            break;
     }
 
     return state;

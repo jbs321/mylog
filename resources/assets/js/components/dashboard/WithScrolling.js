@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from "lodash";
+import Placeholder from "../Placeholder";
 
 export function withScroll(ComponentList) {
     class ListWithScroll extends React.Component {
@@ -58,9 +59,10 @@ export function withScroll(ComponentList) {
             return (
                 <div className={"with-scroll-wrapper"} id={"with-scroll-wrapper"}>
                     <ComponentList posts={arrayList}/>
+                    <Placeholder/>
                 </div>
             );
-        }
+        } //ssds
     }
 
     return ListWithScroll;
