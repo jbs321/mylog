@@ -8,6 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import TextField from 'material-ui/TextField';
 import {deletePost, updatePost} from '../../actions/Post'
+import PropTypes from 'prop-types';
 
 class Post extends React.Component {
     constructor() {
@@ -50,7 +51,9 @@ class Post extends React.Component {
                     />
 
                     <FlatButton label="Save" onClick={this.onSave}/>
-                    <FlatButton label="Cancel" onClick={() => {this.setState({isEditable: false})}}/>
+                    <FlatButton label="Cancel" onClick={() => {
+                        this.setState({isEditable: false})
+                    }}/>
                 </div>
             );
         }
@@ -90,7 +93,9 @@ class Post extends React.Component {
     render() {
         const {title, subTitle, id, animationDelay, withAnimation} = this.props;
 
-        const animationClass = withAnimation ? `animated slideInDown ${animationDelay}`: "";
+        console.log(this.props);
+
+        const animationClass = withAnimation ? `animated slideInDown ${animationDelay}` : "";
 
         const cardClass = [
             "col-xs-12",
@@ -100,7 +105,7 @@ class Post extends React.Component {
         ];
 
         return (
-            <Card className={cardClass.join(" ")} style={{marginTop: 10,  marginBottom: 10}}>
+            <Card className={cardClass.join(" ")} style={{marginTop: 10, marginBottom: 10}}>
                 <IconMenu
                     iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
                     anchorOrigin={{horizontal: 'left', vertical: 'top'}}
@@ -124,5 +129,10 @@ class Post extends React.Component {
         );
     }
 }
+
+Post.propTypes = {
+    id: PropTypes.number.isRequired,
+    content: PropTypes.string.isRequired,
+};
 
 export default connect(null, {deletePost, updatePost})(Post);

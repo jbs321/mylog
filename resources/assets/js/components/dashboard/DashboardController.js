@@ -4,6 +4,7 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import {createUserPost} from '../../actions/Post';
+import OpenIconSpeedDial from './OpenIconSpeedDial';
 
 
 class DashboardController extends React.Component {
@@ -34,6 +35,8 @@ class DashboardController extends React.Component {
 
                     <CardActions>
                         <FlatButton label="Post" onClick={this.handleClick}/>
+
+                        <OpenIconSpeedDial/>
                     </CardActions>
                 </Card>
             </div>
