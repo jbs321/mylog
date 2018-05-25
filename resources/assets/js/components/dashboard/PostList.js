@@ -10,17 +10,27 @@ import Post from './Post';
  */
 class PostList extends React.Component {
     render() {
-        let list      = [];
+        let list = [];
         const {posts} = this.props;
 
-        if(posts === undefined) {
+        if (posts === undefined || posts.length === 0) {
             return null;
         }
 
+
+        let iteration = Object.keys(posts).length;
+        let total = iteration;
         _.each(posts, (post) => {
+            //only last 5 posts get animation
+            let hasAnimation = (iteration > total - 5);
+            let seconds = (total - iteration - 5) * -1;
+
             list.unshift(
-                <Post key={post.id} {...post}/>
+                <Post key={post.id} {...post} withAnimation={hasAnimation} animationDelay={`delay-${seconds}`}/>
             );
+
+
+            iteration -= 1;
         });
 
         return list;

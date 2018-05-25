@@ -88,10 +88,19 @@ class Post extends React.Component {
     }
 
     render() {
-        const {title, subTitle, id} = this.props;
+        const {title, subTitle, id, animationDelay, withAnimation} = this.props;
+
+        const animationClass = withAnimation ? `animated slideInDown ${animationDelay}`: "";
+
+        const cardClass = [
+            "col-xs-12",
+            "offset-sm-1",
+            "col-sm-10",
+            animationClass
+        ];
 
         return (
-            <Card style={{padding: 10, margin: 10, position: "relative"}}>
+            <Card className={cardClass.join(" ")} style={{marginTop: 10,  marginBottom: 10}}>
                 <IconMenu
                     iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
                     anchorOrigin={{horizontal: 'left', vertical: 'top'}}
@@ -101,7 +110,7 @@ class Post extends React.Component {
                     <MenuItem primaryText="Edit" onClick={this.onEdit}/>
                     <MenuItem primaryText="Delete" onClick={this.onDelete}/>
                 </IconMenu>
-
+                max-width
                 <CardHeader
                     id={id}
                     title={title}

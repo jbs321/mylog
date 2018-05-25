@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from "lodash";
 import Placeholder from "../Placeholder";
 
 export function withScroll(ComponentList) {
@@ -9,9 +8,11 @@ export function withScroll(ComponentList) {
 
             this.state = {};
             this.state.isAllLoaded = false;
+            this.state.isLoading = false;
 
             this.onScroll = this.onScroll.bind(this);
             this.onLoad = this.onLoad.bind(this);
+            this.togglePlaceholder = this.togglePlaceholder.bind(this);
         }
 
         componentDidMount() {
@@ -30,10 +31,17 @@ export function withScroll(ComponentList) {
         onLoad() {
             const {isAllLoaded, loadNext} = this.props;
 
-
-            if (isAllLoaded !== undefined && !isAllLoaded) {
-                loadNext();
+            if (isAllLoaded !== undefined && isAllLoaded) {
+                this.setState({isLoading: false});
+                return null;
             }
+
+            this.setState({isLoading: true});
+
+            let that = this;
+            loadNext(() => {
+                that.setState({isLoading: false});
+            });
         }
 
         onScroll() {
@@ -42,6 +50,10 @@ export function withScroll(ComponentList) {
             if (window.innerHeight + window.scrollY >= offsetHeight) {
                 this.onLoad();
             }
+        }
+
+        togglePlaceholder() {
+            return this.state.isLoading ? <Placeholder/> : null;
         }
 
         render() {
@@ -56,13 +68,14 @@ export function withScroll(ComponentList) {
                 arrayList = list;
             }
 
+
             return (
                 <div className={"with-scroll-wrapper"} id={"with-scroll-wrapper"}>
                     <ComponentList posts={arrayList}/>
-                    <Placeholder/>
+                    {this.togglePlaceholder()}
                 </div>
             );
-        } //ssds
+        }
     }
 
     return ListWithScroll;

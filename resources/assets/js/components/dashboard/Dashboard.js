@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
     }
 
 
-    loadNext() {
+    loadNext(cb) {
         const {posts: {current_page, pages}, findNextPagination} = this.props;
 
         const first = pages[current_page];
@@ -43,12 +43,11 @@ class Dashboard extends React.Component {
         }
 
         this.setState({
-            isLoading: true,
             current: first.current_page
         });
 
         findNextPagination(first, (result) => {
-            this.setState({isLoading: false});
+            cb();
         });
     }
 
