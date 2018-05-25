@@ -88,15 +88,15 @@ class Post extends React.Component {
     }
 
     render() {
-        const {title, subTitle, id, animationDelay} = this.props;
+        const {title, subTitle, id, animationDelay, withAnimation} = this.props;
+
+        const animationClass = withAnimation ? `animated slideInDown ${animationDelay}`: "";
 
         const cardClass = [
             "col-xs-12",
             "offset-sm-1",
             "col-sm-10",
-            "animated",
-            "slideInDown",
-            animationDelay
+            animationClass
         ];
 
         return (
