@@ -13,14 +13,22 @@ class PostList extends React.Component {
         let list      = [];
         const {posts} = this.props;
 
-        if(posts === undefined) {
+        if(posts === undefined || posts.length === 0) {
             return null;
         }
 
+
+        let iteration = Object.keys(posts).length;
+
+        console.log("new iteration " + iteration);
         _.each(posts, (post) => {
+            console.log(iteration);
             list.unshift(
-                <Post key={post.id} {...post}/>
+                <Post key={post.id} {...post} animationDelay={`delay-${iteration}`}/>
             );
+
+
+            iteration -= 1;
         });
 
         return list;

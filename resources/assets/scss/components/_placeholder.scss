@@ -1,68 +1,119 @@
-.placeholder-container {
-  width: 100%;
-  height: 100%;
+.timeline-item {
   border: 1px solid;
-  margin: 5px;
-  padding: 3%;
+  padding: 12px;
+  min-height: 200px;
   background: #fff;
   border-color: #e5e6e9 #dfe0e4 #d0d1d5;
   border-radius: 3px;
 
   .animated-background {
-    -webkit-animation-duration: 1s;
     animation-duration: 1s;
-    -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
-    -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
-    -webkit-animation-name: placeHolderShimmer;
     animation-name: placeHolderShimmer;
-    -webkit-animation-timing-function: linear;
     animation-timing-function: linear;
-    background: #eeeeee;
-    background: -webkit-gradient(linear, left top, right top, color-stop(8%, #eeeeee), color-stop(18%, #dddddd), color-stop(33%, #eeeeee));
-    background: -webkit-linear-gradient(left, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background: #f6f7f8;
     background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-    @include background-size(800px 104px);
-    @include box-sizing(border-box);
+    background-size: 800px 104px;
+    height: 96px;
+    position: relative;
 
-    &.header-top {
-      width: 30%;
-      padding-bottom: 30%;
-      margin: 0 10px 10px 0;
-      float: left;
-    }
+    .background-masker {
+      position: absolute;
+      background: #fff;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
 
-    &.header-top-right {
-      width: 60%;
-      float: left;
-      height: 4%;
-      margin: 0 0 10px 0;
-    }
+      &.header-top,
+      &.header-bottom,
+      &.subheader-bottom {
+        top: 0;
+        left: 40px;
+        right: 0;
+        height: 10px;
+      }
 
-    &.header-top-right-2 {
-      width: 50%;
-      float: left;
-      height: 4%;
-      margin: 0 0 10px 0;
-    }
+      &.header-left,
+      &.subheader-left,
+      &.header-right,
+      &.subheader-right {
+        top: 10px;
+        left: 40px;
+        height: 8px;
+        width: 10px;
+      }
 
-    &.header-large {
-      width: 95%;
-      height: 4%;
-      margin: 0 0 10px 0;
-    }
+      &.header-bottom {
+        top: 18px;
+        height: 6px;
+      }
 
-    &.header-medium {
-      width: 85%;
-      height: 4%;
-      margin: 10px 0 10px 0;
-    }
+      &.subheader-left,
+      &.subheader-right {
+        top: 24px;
+        height: 6px;
+      }
 
-    &.header-small {
-      width: 75%;
-      height: 4%;
-      margin: 0 0 10px 0;
+      &.header-right,
+      &.subheader-right {
+        width: auto;
+        left: 300px;
+        right: 0;
+      }
+
+      &.subheader-right {
+        left: 230px;
+      }
+
+      &.subheader-bottom {
+        top: 30px;
+        height: 10px;
+      }
+
+      &.content-top,
+      &.content-second-line,
+      &.content-third-line,
+      &.content-second-end,
+      &.content-third-end,
+      &.content-first-end {
+        top: 40px;
+        left: 0;
+        right: 0;
+        height: 6px;
+      }
+
+      &.content-top {
+        height: 20px;
+      }
+
+      &.content-first-end,
+      &.content-second-end,
+      &.content-third-end {
+        top: 60px;
+        left: 380px;
+        width: auto;
+        right: 0;
+        height: 8px;
+      }
+
+      &.content-second-line {
+        top: 68px;
+      }
+
+      &.content-second-end {
+        top: 74px;
+        left: 420px;
+      }
+
+      &.content-third-line {
+        top: 82px;
+      }
+
+      &.content-third-end {
+        top: 88px;
+        left: 300px;
+      }
     }
   }
 }

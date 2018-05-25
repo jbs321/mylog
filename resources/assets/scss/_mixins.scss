@@ -14,6 +14,20 @@
   animation: $animation;
 }
 
+@mixin animation-duration($duration) {
+  animation-duration: $duration;
+  -o-animation-duration: $duration;
+  -moz-animation-duration: $duration;
+  -webkit-animation-duration: $duration;
+}
+
+@mixin browser-prefix($command, $value) {
+  $command: $value;
+  -o-#{$command}: $value;
+  -moz-#{$command}: $value;
+  -webkit-#{$command}: $value;
+}
+
 @mixin keyframes($animationName) {
   @-webkit-keyframes #{$animationName} {
     @content;
