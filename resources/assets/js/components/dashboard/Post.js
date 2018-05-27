@@ -92,9 +92,6 @@ class Post extends React.Component {
 
     render() {
         const {title, subTitle, id, animationDelay, withAnimation} = this.props;
-
-        console.log(this.props);
-
         const animationClass = withAnimation ? `animated slideInDown ${animationDelay}` : "";
 
         const cardClass = [

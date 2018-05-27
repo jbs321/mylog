@@ -15,9 +15,6 @@ import EditIcon from '@material-ui/icons/ModeEdit';
 import AddIcon from '@material-ui/icons/Label';
 
 const styles = theme => ({
-    root: {
-        height: 380,
-    },
     speedDial: {
         position: 'absolute',
         bottom: theme.spacing.unit * 2,
@@ -69,9 +66,8 @@ class OpenIconSpeedDial extends React.Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const {classes, onSelect} = this.props;
         const {hidden, open} = this.state;
-        /*<div className={classes.root}>*/
 
         return (
             <div>
@@ -93,7 +89,7 @@ class OpenIconSpeedDial extends React.Component {
                             key={action.name}
                             icon={action.icon}
                             tooltipTitle={action.name}
-                            onClick={this.handleClick}
+                            onClick={onSelect}
                         />
                     ))}
                 </SpeedDial>
@@ -105,6 +101,7 @@ class OpenIconSpeedDial extends React.Component {
 
 OpenIconSpeedDial.propTypes = {
     classes: PropTypes.object.isRequired,
+    onSelect: PropTypes.func
 };
 
 export default withStyles(styles)(OpenIconSpeedDial);

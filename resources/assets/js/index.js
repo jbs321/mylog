@@ -11,8 +11,6 @@ import history from './history';
 import App from "./app";
 import _ from 'lodash';
 
-// process.env.ENV.VARIABLE
-
 /**
  * Set global setting for Axios
  * https://github.com/mzabriskie/axios

@@ -1,23 +1,24 @@
-import React from 'react';
-import IconMenu from 'material-ui/IconMenu';
-import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
-import IconButton from 'material-ui/IconButton';
-import MenuItem from 'material-ui/MenuItem';
-import {connect} from "react-redux";
-import Spinner from "./Spinner";
+import React from 'react'
+import IconMenu from 'material-ui/IconMenu'
+import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more'
+import IconButton from 'material-ui/IconButton'
+import MenuItem from 'material-ui/MenuItem'
+import {connect} from "react-redux"
+import _ from "lodash"
 
-export const style = {display: "table-cell", verticalAlign: "middle"};
+
+export const style = {display: "table-cell", verticalAlign: "middle"}
 
 class MenuIcon extends React.Component {
 
     renderWelcomeMsg() {
-        let name = this.props.user.name;
+        let {user: {name}} = this.props;
 
-        if (name == undefined) {
-            name = null;
+        if (name === undefined) {
+            name = "Welcome";
         }
 
-        return <div style={style}>Welcome {name}</div>;
+        return <div style={style}>Welcome {_.upperFirst(name)}</div>
     }
 
     static renderMenuBtn() {
@@ -42,12 +43,12 @@ class MenuIcon extends React.Component {
                     {MenuIcon.renderMenuBtn()}
                 </div>
             </div>
-        );
+        )
     }
 }
 
 function mapStateToProps(state) {
-    return state;
+    return state
 }
 
-export default connect(mapStateToProps, null)(MenuIcon);
+export default connect(mapStateToProps, null)(MenuIcon)
