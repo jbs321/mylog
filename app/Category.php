@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    const PLURAL = "categories";
+
     const FIELD__POST_ID = "post_id";
     const FIELD__USER_ID = "user_id";
     const FIELD__CONTENT = "content";
@@ -20,11 +22,11 @@ class Category extends Model
 
     public function post()
     {
-        $this->hasOne('App\Post');
+        return $this->hasOne('App\Post');
     }
 
     public function user()
     {
-        $this->hasOne('App\User');
+        return $this->hasOne('App\User');
     }
 }

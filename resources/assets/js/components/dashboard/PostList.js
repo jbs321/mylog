@@ -26,7 +26,7 @@ class PostList extends React.Component {
             let seconds = (total - iteration - 5) * -1;
 
             list.unshift(
-                <Post key={post.id} {...post} withAnimation={hasAnimation} animationDelay={`delay-${seconds}`}/>
+                <Post key={post.id} categories={post.categories} {...post} withAnimation={hasAnimation} animationDelay={`delay-${seconds}`}/>
             );
 
 

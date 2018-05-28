@@ -94,8 +94,7 @@ class OpenIconSpeedDial extends React.Component {
                     ))}
                 </SpeedDial>
             </div>
-        )
-            ;
+        );
     }
 }
 

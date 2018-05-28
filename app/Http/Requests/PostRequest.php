@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Category;
 use App\Post;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -26,6 +27,7 @@ class PostRequest extends FormRequest
     {
         return [
             Post::FIELD__CONTENT => 'required|max:500',
+            Category::PLURAL     => 'array'
         ];
     }
 }

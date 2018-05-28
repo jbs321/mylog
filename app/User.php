@@ -43,7 +43,10 @@ class User extends Authenticatable
         return $this->hasMany('App\LogLabel');
     }
 
-
+    /**
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function posts()
     {
         return $this->hasMany('App\Post')

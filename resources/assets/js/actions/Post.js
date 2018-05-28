@@ -44,11 +44,14 @@ export function findNextPagination(pagination, cb) {
 }
 
 export function createUserPost(post) {
+    const {content, categories} = post;
+
     const request = axios({
         method: "PUT",
         url: `/api/post/store`,
         data: qs.stringify({
-            content: post
+            content: content,
+            categories: categories,
         }),
     });
 

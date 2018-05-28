@@ -19,11 +19,16 @@ class Post extends Model
         self::FIELD__CONTENT,
     ];
 
-    /**
-     * @return User
-     */
     public function user()
     {
-        $this->hasOne('App\User');
+        return $this->hasOne('App\User');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function categories()
+    {
+        return $this->hasMany('App\Category');
     }
 }

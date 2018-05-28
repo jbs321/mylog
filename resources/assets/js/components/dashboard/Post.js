@@ -9,6 +9,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import TextField from 'material-ui/TextField';
 import {deletePost, updatePost} from '../../actions/Post'
 import PropTypes from 'prop-types';
+import CategoryController from './CategoryController';
 
 class Post extends React.Component {
     constructor() {
@@ -16,6 +17,7 @@ class Post extends React.Component {
 
         this.state = {};
         this.state.content = "";
+        this.state.categories = [];
         this.state.isEditable = false;
 
         this.onEdit = this.onEdit.bind(this);
@@ -25,40 +27,13 @@ class Post extends React.Component {
     }
 
     componentDidMount() {
-        const {content} = this.props;
+        const {content, categories} = this.props;
 
         this.setState({
             content: content,
-            isEditable: false
+            categories: categories.map((cat) => cat.content),
+            isEditable: false,
         });
-    }
-
-    renderText() {
-        const {content} = this.state;
-
-        if (this.state.isEditable) {
-            const {id} = this.props;
-
-            return (
-                <div>
-                    <TextField
-                        name={`post-${id}`}
-                        id={`post-${id}`}
-                        style={{width: "100%"}}
-                        value={this.state.content}
-                        multiLine={true}
-                        onChange={this.handleChange}
-                    />
-
-                    <FlatButton label="Save" onClick={this.onSave}/>
-                    <FlatButton label="Cancel" onClick={() => {
-                        this.setState({isEditable: false})
-                    }}/>
-                </div>
-            );
-        }
-
-        return content;
     }
 
     handleChange(evt) {
@@ -82,12 +57,46 @@ class Post extends React.Component {
 
     onSave() {
         const {id, updatePost} = this.props;
+        const {categories} = this.state;
+
+        console.log(categories);
 
         updatePost(id, {
-            content: this.state.content
+            content: this.state.content,
+            categories: categories,
         });
 
         this.setState({isEditable: false});
+    }
+
+    renderText() {
+        const {id} = this.props;
+        const {content, isEditable, categories} = this.state;
+
+        if (!isEditable) {
+            return content;
+        }
+
+        return (
+            <div>
+                <TextField
+                    name={`post-${id}`}
+                    id={`post-${id}`}
+                    style={{width: "100%"}}
+                    value={this.state.content}
+                    multiLine={true}
+                    onChange={this.handleChange}
+                />
+
+                <CategoryController chips={categories}
+                                    onCreate={(categories) => this.setState({categories: categories})}/>
+
+                <FlatButton label="Save" onClick={this.onSave}/>
+                <FlatButton label="Cancel" onClick={() => {
+                    this.setState({isEditable: false})
+                }}/>
+            </div>
+        );
     }
 
     render() {
@@ -112,13 +121,9 @@ class Post extends React.Component {
                     <MenuItem primaryText="Edit" onClick={this.onEdit}/>
                     <MenuItem primaryText="Delete" onClick={this.onDelete}/>
                 </IconMenu>
-                max-width
-                <CardHeader
-                    id={id}
-                    title={title}
-                    subtitle={subTitle}
-                >
-                </CardHeader>
+
+                <CardHeader id={id} title={title} subtitle={subTitle}/>
+
                 <CardText>
                     {this.renderText()}
                 </CardText>
