@@ -56,11 +56,17 @@ class DashboardController extends React.Component {
             return null;
         }
 
+        let that = this;
+
         this.props.createUserPost({
             content: post_text,
             categories: chips,
         }, (data) => {
-            this.setState({post_text: ""});
+            that.setState({
+                chips: [],
+                post_text: "",
+                displayCategory: false,
+            });
         });
     }
 

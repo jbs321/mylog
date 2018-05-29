@@ -43,7 +43,7 @@ export function findNextPagination(pagination, cb) {
     }
 }
 
-export function createUserPost(post) {
+export function createUserPost(post, cb) {
     const {content, categories} = post;
 
     const request = axios({
@@ -54,6 +54,8 @@ export function createUserPost(post) {
             categories: categories,
         }),
     });
+
+    request.then((result) => cb(result));
 
     return {
         type: POST_CREATE_POST,

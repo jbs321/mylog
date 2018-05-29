@@ -28,6 +28,10 @@ class CategoryController extends React.Component {
     componentDidMount() {
         const {chips} = this.props;
 
+        if(chips === undefined) {
+            return;
+        }
+
         this.setState({
             chips: chips
         });
