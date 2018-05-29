@@ -4,6 +4,10 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import MenuIcon from './MenuIcon';
 import {connect} from "react-redux";
 import {fetchUserDetails} from '../actions/User'
+import PropTypes from "prop-types";
+import {withStyles} from '@material-ui/core/styles';
+
+const styles = theme => ({});
 
 class CustomToolbar extends React.Component {
     componentDidMount() {
@@ -31,4 +35,8 @@ function mapStateToProps(state) {
     return state;
 }
 
-export default connect(mapStateToProps, {fetchUserDetails})(CustomToolbar);
+CustomToolbar.propTypes = {
+    classes: PropTypes.object,
+};
+
+export default connect(mapStateToProps, {fetchUserDetails})(withStyles(styles)(CustomToolbar));

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 export const IS_AUTHENTICATED = "is_authenticate";
+export const LOGOUT = "logout";
 
 let qs = require('qs');
 
@@ -21,5 +22,16 @@ export function fetchAuth(cb = undefined) {
     return {
         type: IS_AUTHENTICATED,
         payload: isAuth
+    }
+}
+
+export function logOut(cb = undefined) {
+    if(cb !== undefined) {
+        cb();
+    }
+
+    return {
+        type: LOGOUT,
+        payload: false
     }
 }
