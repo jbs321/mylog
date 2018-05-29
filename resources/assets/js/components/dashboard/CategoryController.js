@@ -27,6 +27,7 @@ class CategoryController extends React.Component {
 
     componentDidMount() {
         const {chips} = this.props;
+
         this.setState({
             chips: chips
         });
@@ -58,7 +59,13 @@ class CategoryController extends React.Component {
 
         let {chips} = this.state;
 
-        chips.push(val);
+        if(val.includes(",")) {
+            chips = chips.concat(val.split(","));
+        } else {
+            chips.push(val);
+        }
+
+
 
         this.setState({
             chips: chips,

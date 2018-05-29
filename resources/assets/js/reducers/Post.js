@@ -15,7 +15,7 @@ export default function (state = {}, action) {
                 const {data} = action.payload;
                 return {
                     current_page: data.current_page,
-                    list: _.keyBy(data.data, 'id'),
+                    list: _.keyBy(_.orderBy(data.data, ["updated_at"], ["desc"]), 'updated_at'),
                     pages: {
                         [data.current_page]: new Pagination(data)
                     }
@@ -30,7 +30,7 @@ export default function (state = {}, action) {
                 let newState = _.assign({}, state);
 
                 newState.current_page = data.current_page;
-                newState.list = _.assign(newState.list, _.keyBy(data.data, 'id'));
+                newState.list = _.keyBy(_.orderBy(_.assign(_.keyBy(data.data, 'updated_at'), newState.list), ["updated_at"], ["desc"]), 'updated_at');
                 newState.pages = _.assign({[data.current_page]: new Pagination(data)}, newState.pages);
 
                 return newState;

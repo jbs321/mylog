@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {Card, CardHeader, CardText} from 'material-ui/Card';
+import {CardText, CardHeader} from 'material-ui/Card';
+import Card from '@material-ui/core/Card';
 import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
@@ -10,6 +11,22 @@ import TextField from 'material-ui/TextField';
 import {deletePost, updatePost} from '../../actions/Post'
 import PropTypes from 'prop-types';
 import CategoryController from './CategoryController';
+import Typography from '@material-ui/core/Typography';
+import {withStyles} from '@material-ui/core/styles';
+
+const styles = {
+    title: {
+        marginBottom: 16,
+        fontSize: 14,
+    },
+    footer: {
+        fontSize: 14,
+    },
+    card: {
+        marginTop: 10,
+        marginBottom: 10
+    }
+};
 
 class Post extends React.Component {
     constructor() {
@@ -59,8 +76,6 @@ class Post extends React.Component {
         const {id, updatePost} = this.props;
         const {categories} = this.state;
 
-        console.log(categories);
-
         updatePost(id, {
             content: this.state.content,
             categories: categories,
@@ -70,7 +85,7 @@ class Post extends React.Component {
     }
 
     renderText() {
-        const {id} = this.props;
+        const {id, updated_at} = this.props;
         const {content, isEditable, categories} = this.state;
 
         if (!isEditable) {
@@ -100,18 +115,20 @@ class Post extends React.Component {
     }
 
     render() {
-        const {title, subTitle, id, animationDelay, withAnimation} = this.props;
+        const {title, subTitle, id, animationDelay, withAnimation, updated_at, classes} = this.props;
+        const {categories} = this.state;
         const animationClass = withAnimation ? `animated slideInDown ${animationDelay}` : "";
 
         const cardClass = [
             "col-xs-12",
             "offset-sm-1",
             "col-sm-10",
-            animationClass
+            animationClass,
+            classes.card,
         ];
 
         return (
-            <Card className={cardClass.join(" ")} style={{marginTop: 10, marginBottom: 10}}>
+            <Card className={cardClass.join(" ")}>
                 <IconMenu
                     iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
                     anchorOrigin={{horizontal: 'left', vertical: 'top'}}
@@ -122,19 +139,34 @@ class Post extends React.Component {
                     <MenuItem primaryText="Delete" onClick={this.onDelete}/>
                 </IconMenu>
 
-                <CardHeader id={id} title={title} subtitle={subTitle}/>
+                <CardHeader>
+                    <Typography className={classes.title} color="textSecondary">
+                        {updated_at}
+                    </Typography>
+                </CardHeader>
 
                 <CardText>
                     {this.renderText()}
+                </CardText>
+
+                <CardText>
+                    <Typography className={classes.footer} color="textSecondary">
+                        {categories.join(", ")}
+                    </Typography>
                 </CardText>
             </Card>
         );
     }
 }
 
+function mapStateToProps(state) {
+    return state;
+}
+
 Post.propTypes = {
     id: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
-export default connect(null, {deletePost, updatePost})(Post);
+export default connect(mapStateToProps, {deletePost, updatePost})(withStyles(styles)(Post));

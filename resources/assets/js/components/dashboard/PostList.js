@@ -17,18 +17,21 @@ class PostList extends React.Component {
             return null;
         }
 
-
         let iteration = Object.keys(posts).length;
         let total = iteration;
+
         _.each(posts, (post) => {
             //only last 5 posts get animation
             let hasAnimation = (iteration > total - 5);
             let seconds = (total - iteration - 5) * -1;
 
-            list.unshift(
-                <Post key={post.id} categories={post.categories} {...post} withAnimation={hasAnimation} animationDelay={`delay-${seconds}`}/>
+            list.push(
+                <Post {...post}
+                      key={post.id}
+                      categories={post.categories}
+                      withAnimation={hasAnimation}
+                      animationDelay={`delay-${seconds}`}/>
             );
-
 
             iteration -= 1;
         });

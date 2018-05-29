@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {findAllByUser, findNextPagination} from "../../actions/Post";
 import {withScroll} from './WithScrolling'
 import PostList from './PostList'
-import _ from "lodash";
 
 //Set this HOC outside Class it wont be redefined when re-rendered
 const PostListWithScroll = withScroll(PostList);
