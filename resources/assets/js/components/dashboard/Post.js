@@ -115,7 +115,7 @@ class Post extends React.Component {
     }
 
     render() {
-        const {title, subTitle, id, animationDelay, withAnimation, updated_at, classes} = this.props;
+        const {animationDelay, withAnimation, updated_at, classes} = this.props;
         const {categories} = this.state;
         const animationClass = withAnimation ? `animated slideInDown ${animationDelay}` : "";
 

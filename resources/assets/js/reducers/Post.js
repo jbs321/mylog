@@ -8,14 +8,18 @@ import {
     GET_NEXT_POSTS
 } from '../actions/Post';
 
+const SORT_ID = "id";
+
 export default function (state = {}, action) {
     switch (action.type) {
         case GET_USER_POSTS:
             if (action.payload.data) {
                 const {data} = action.payload;
+                let list     = _.keyBy(data.data, SORT_ID);
+
                 return {
                     current_page: data.current_page,
-                    list: _.keyBy(_.orderBy(data.data, ["updated_at"], ["desc"]), 'updated_at'),
+                    list: list,
                     pages: {
                         [data.current_page]: new Pagination(data)
                     }
@@ -27,12 +31,15 @@ export default function (state = {}, action) {
         case GET_NEXT_POSTS:
             if (action.payload.data) {
                 const {data} = action.payload;
+
                 let newState = _.assign({}, state);
+                let list     = _.keyBy(data.data, SORT_ID);
+                list = _.assign(newState.list, list);
+
 
                 newState.current_page = data.current_page;
-                newState.list = _.keyBy(_.orderBy(_.assign(_.keyBy(data.data, 'updated_at'), newState.list), ["updated_at"], ["desc"]), 'updated_at');
+                newState.list =  list;
                 newState.pages = _.assign({[data.current_page]: new Pagination(data)}, newState.pages);
-
                 return newState;
             }
 
@@ -53,7 +60,11 @@ export default function (state = {}, action) {
                 const {data: {id}} = action.payload;
                 let newState = _.assign({}, state);
 
-                _.unset(newState.list, id);
+                let isDeleted = _.unset(newState.list, id);
+
+                if(!isDeleted) {
+                    throw new Error("Item not deleted");
+                }
 
                 return newState;
             }
