@@ -26,7 +26,7 @@ export function findAllByUser() {
 
 export function findNextPagination(pagination, cb) {
     if (pagination !== undefined
-            && !pagination instanceof Pagination) {
+        && !pagination instanceof Pagination) {
         throw new Error('Wrong Type for parameter');
     }
 
@@ -44,16 +44,32 @@ export function findNextPagination(pagination, cb) {
 }
 
 export function createUserPost(post, cb) {
-    const {content, categories} = post;
+    const formData = new FormData();
+    const {content, categories, photo} = post;
 
-    const request = axios({
-        method: "PUT",
-        url: `/api/post/store`,
-        data: qs.stringify({
-            content: content,
-            categories: categories,
-        }),
-    });
+    formData.append('photo', photo, photo.name);
+    formData.append('content', content);
+    formData.append('categories', qs.stringify(categories));
+
+
+    let config = {
+        headers: {'Content-Type': 'multipart/form-data'},
+        onUploadProgress: function (progressEvent) {
+            let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            console.log(percentCompleted);
+        }
+    };
+
+    const request = axios.post("/api/post/store", formData, config);
+
+    // const request = axios({
+    //     method: "PUT",
+    //     url: `/api/post/store`,
+    //     data: qs.stringify({
+    //         content: content,
+    //         categories: categories,
+    //     }),
+    // });
 
     request.then((result) => cb(result));
 

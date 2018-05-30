@@ -13,7 +13,6 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-
     {{--Chart.js--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 
@@ -27,7 +26,6 @@
 
 {{--React JS--}}
 <script src="/js/bundle.js" type="text/javascript"></script>
-
 
 </body>
 </html>

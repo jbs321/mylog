@@ -115,7 +115,7 @@ class Post extends React.Component {
     }
 
     render() {
-        const {animationDelay, withAnimation, updated_at, classes} = this.props;
+        const {animationDelay, withAnimation, created_at, classes} = this.props;
         const {categories} = this.state;
         const animationClass = withAnimation ? `animated slideInDown ${animationDelay}` : "";
 
@@ -141,7 +141,7 @@ class Post extends React.Component {
 
                 <CardHeader>
                     <Typography className={classes.title} color="textSecondary">
-                        {updated_at}
+                        {created_at}
                     </Typography>
                 </CardHeader>
 

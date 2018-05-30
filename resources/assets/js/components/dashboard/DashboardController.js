@@ -33,12 +33,15 @@ class DashboardController extends React.Component {
         this.state = {};
         this.state.chips = [];
         this.state.post_text = "";
+        this.state.selectedFile = null;
         this.state.displayCategory = false;
 
         this.handleClick = this.handleClick.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.renderPlaceholder = this.renderPlaceholder.bind(this);
-        this.handleSpeedDial = this.handleSpeedDial.bind(this);
+        this.toggleCategories = this.toggleCategories.bind(this);
+        this.fileChangedHandler = this.fileChangedHandler.bind(this);
+        // this.uploadHandler = this.uploadHandler.bind(this);
     }
 
     renderPlaceholder() {
@@ -52,7 +55,7 @@ class DashboardController extends React.Component {
         return ph;
     }
 
-    handleSpeedDial() {
+    toggleCategories() {
         const {displayCategory} = this.state;
         this.setState({
             displayCategory: !displayCategory
@@ -61,7 +64,7 @@ class DashboardController extends React.Component {
 
 
     handleClick() {
-        const {post_text, chips} = this.state;
+        const {post_text, chips, selectedFile} = this.state;
 
         if (post_text === undefined || post_text === "") {
             return null;
@@ -72,6 +75,7 @@ class DashboardController extends React.Component {
         this.props.createUserPost({
             content: post_text,
             categories: chips,
+            photo: selectedFile,
         }, (data) => {
             that.setState({
                 chips: [],
@@ -83,6 +87,18 @@ class DashboardController extends React.Component {
 
     handleInputChange(evt) {
         this.setState({[evt.target.name]: evt.target.value});
+    }
+
+    fileChangedHandler(event) {
+        const file = event.target.files[0];
+
+        if (file === undefined) {
+            throw new Error("File missing");
+        }
+
+        this.setState({
+            selectedFile: file
+        });
     }
 
     render() {
@@ -118,12 +134,13 @@ class DashboardController extends React.Component {
                     <CardActions>
                         <FlatButton label="Post" onClick={this.handleClick}/>
 
-                        <IconButton color="primary" aria-label="Add Category" onClick={this.handleSpeedDial}>
+                        <IconButton color="primary" aria-label="Add Category" onClick={this.toggleCategories}>
                             <LabelIcon/>
                         </IconButton>
 
 
-                        <input accept="image/*" className={classes.input} id="icon-button-file" type="file"/>
+                        <input accept="image/*" className={classes.input} id="icon-button-file"
+                               onChange={this.fileChangedHandler} type="file"/>
                         <label htmlFor="icon-button-file">
                             <IconButton color="primary" className={classes.button} component="span">
                                 <PhotoCamera/>

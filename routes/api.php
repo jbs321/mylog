@@ -32,7 +32,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('posts/{post}', 'PostController@findByPost');
     Route::post('posts/{post}', 'PostController@update');
     Route::get('/user/posts', 'PostController@findAllByUser');
-    Route::put('post/store', 'PostController@store');
+    Route::post('post/store', 'PostController@store');
     Route::delete('posts/{post}/delete', 'PostController@destroy');
 });
 
