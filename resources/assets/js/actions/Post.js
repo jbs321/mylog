@@ -47,9 +47,11 @@ export function createUserPost(post, cb) {
     const formData = new FormData();
     const {content, categories, photo} = post;
 
+    console.log(categories);
+
     formData.append('photo', photo, photo.name);
     formData.append('content', content);
-    formData.append('categories', qs.stringify(categories));
+    formData.append('categories', categories);
 
 
     let config = {
@@ -60,16 +62,13 @@ export function createUserPost(post, cb) {
         }
     };
 
-    const request = axios.post("/api/post/store", formData, config);
+    // const request = axios.post("/api/post/store", formData, config);
 
-    // const request = axios({
-    //     method: "PUT",
-    //     url: `/api/post/store`,
-    //     data: qs.stringify({
-    //         content: content,
-    //         categories: categories,
-    //     }),
-    // });
+    const request = axios({
+        method: "POST",
+        url: `/api/post/store`,
+        data: formData,
+    });
 
     request.then((result) => cb(result));
 

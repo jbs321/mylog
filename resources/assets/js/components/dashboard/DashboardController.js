@@ -10,6 +10,7 @@ import {withStyles} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import LabelIcon from '@material-ui/icons/Label';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import CardMedia from '@material-ui/core/CardMedia';
 
 const styles = theme => ({
     paperClass: {
@@ -25,6 +26,10 @@ const styles = theme => ({
     input: {
         display: 'none',
     },
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    },
 });
 
 class DashboardController extends React.Component {
@@ -33,6 +38,7 @@ class DashboardController extends React.Component {
         this.state = {};
         this.state.chips = [];
         this.state.post_text = "";
+        this.state.imagePreviewUrl = "";
         this.state.selectedFile = null;
         this.state.displayCategory = false;
 
@@ -41,7 +47,7 @@ class DashboardController extends React.Component {
         this.renderPlaceholder = this.renderPlaceholder.bind(this);
         this.toggleCategories = this.toggleCategories.bind(this);
         this.fileChangedHandler = this.fileChangedHandler.bind(this);
-        // this.uploadHandler = this.uploadHandler.bind(this);
+        this.renderMedia = this.renderMedia.bind(this);
     }
 
     renderPlaceholder() {
@@ -90,15 +96,35 @@ class DashboardController extends React.Component {
     }
 
     fileChangedHandler(event) {
+        let reader = new FileReader();
         const file = event.target.files[0];
+        let that = this;
 
         if (file === undefined) {
             throw new Error("File missing");
         }
 
         this.setState({
-            selectedFile: file
+            selectedFile: file,
+            imagePreviewUrl: URL.createObjectURL(file)
         });
+    }
+
+    renderMedia() {
+        const {imagePreviewUrl} = this.state;
+        const {classes} = this.props;
+
+        if (imagePreviewUrl === "") {
+            return null;
+        }
+
+        return (
+            <CardMedia
+                className={classes.media}
+                image={imagePreviewUrl}
+                title="Title"
+            />
+        );
     }
 
     render() {
@@ -130,6 +156,8 @@ class DashboardController extends React.Component {
                     <CardText>
                         {postCategoriesController}
                     </CardText>
+
+                    {this.renderMedia()}
 
                     <CardActions>
                         <FlatButton label="Post" onClick={this.handleClick}/>

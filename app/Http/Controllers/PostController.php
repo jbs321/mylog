@@ -6,20 +6,16 @@ use App\Category;
 use App\Http\Requests\PostRequest;
 use App\Post;
 use App\User;
-use Faker\Provider\Image;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use function PHPSTORM_META\type;
 
 class PostController extends Controller
 {
     public function findAllByUser()
     {
         /** @var User $user */
-        $user       = Auth::user();
-        $posts      = $user->posts()->with(Category::PLURAL);
+        $user = Auth::user();
+        $posts = $user->posts()->with(Category::PLURAL);
         $pagination = $posts->paginate(5);
 
         return new JsonResponse($pagination);
@@ -30,9 +26,9 @@ class PostController extends Controller
         return new JsonResponse($post);
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        dd(gettype($request->get('categories')), $request->get('categories'));
+//        dd($request->all());
         $user = Auth::user();
         $post = new Post();
         $post->fill($request->all());
@@ -41,10 +37,10 @@ class PostController extends Controller
 
         //handle Category relationship
         if (isset($request->categories)) {
-            $categories = $request->categories;
+            $categories = explode(",", $request->categories);
 
             $categories = array_map(function (string $category) use ($post, $user) {
-                $cat                           = new Category();
+                $cat = new Category();
                 $cat[Category::FIELD__POST_ID] = $post->id;
                 $cat[Category::FIELD__USER_ID] = $user->id;
                 $cat[Category::FIELD__CONTENT] = $category;
@@ -56,19 +52,10 @@ class PostController extends Controller
         }
 
         //handle File Upload
-        if($request->hasFile("photo")) {
-            $image      = $request->file('photo');
-//            $fileName   = time() . '.' . $image->getClientOriginalExtension();
-
-            $img = Image::make($image->getRealPath());
-
-            $img->resize(120, 120, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-
-            $img->stream(); // <-- Key point
-
-            Storage::disk('local')->put("images/{$user->id}/{$post->id}/photo", $img, 'public');
+        if ($request->hasFile("photo")) {
+            $image = $request->file('photo');
+            $extenstion = $image->getClientOriginalExtension();
+            $filePath = $image->storeAs("uploads/posts", "{$user->id}_{$post->id}.$extenstion" );
         }
 
         $post->categories;
@@ -88,7 +75,7 @@ class PostController extends Controller
             $post->categories()->delete();
 
             $categories = array_map(function (string $category) use ($post, $user) {
-                $cat                           = new Category();
+                $cat = new Category();
                 $cat[Category::FIELD__POST_ID] = $post->id;
                 $cat[Category::FIELD__USER_ID] = $user->id;
                 $cat[Category::FIELD__CONTENT] = $category;
