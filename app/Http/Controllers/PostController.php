@@ -28,7 +28,6 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
-//        dd($request->all());
         $user = Auth::user();
         $post = new Post();
         $post->fill($request->all());
