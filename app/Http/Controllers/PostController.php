@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Http\Requests\PostRequest;
 use App\Post;
+use App\PostImage;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,7 @@ class PostController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        $posts = $user->posts()->with(Category::PLURAL);
+        $posts = $user->posts()->with(Category::PLURAL)->with(PostImage::PLURAL);
         $pagination = $posts->paginate(5);
 
         return new JsonResponse($pagination);
@@ -23,6 +24,9 @@ class PostController extends Controller
 
     public function findByPost(Post $post)
     {
+        $post->categories;
+        $post->postImages;
+
         return new JsonResponse($post);
     }
 
@@ -36,7 +40,7 @@ class PostController extends Controller
 
         //handle Category relationship
         if (isset($request->categories)) {
-            $categories = explode(",", $request->categories);
+            $categories = $request->categories;
 
             $categories = array_map(function (string $category) use ($post, $user) {
                 $cat = new Category();
@@ -50,14 +54,8 @@ class PostController extends Controller
             $post->categories()->saveMany($categories);
         }
 
-        //handle File Upload
-        if ($request->hasFile("photo")) {
-            $image = $request->file('photo');
-            $extenstion = $image->getClientOriginalExtension();
-            $filePath = $image->storeAs("uploads/posts", "{$user->id}_{$post->id}.$extenstion" );
-        }
-
         $post->categories;
+        $post->postImages;
 
         return new JsonResponse($post);
     }
@@ -86,7 +84,7 @@ class PostController extends Controller
         }
 
         $post->categories;
-
+        $post->postImages;
 
         return new JsonResponse($post);
     }

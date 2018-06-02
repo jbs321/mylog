@@ -34,6 +34,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/user/posts', 'PostController@findAllByUser');
     Route::post('post/store', 'PostController@store');
     Route::delete('posts/{post}/delete', 'PostController@destroy');
+
+    Route::post('posts/{post}/uploadImages', 'PostImageController@saveImages');
 });
 
 

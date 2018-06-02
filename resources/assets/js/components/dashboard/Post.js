@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import CategoryController from './CategoryController';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
+import CardMedia from '@material-ui/core/CardMedia';
 
 const styles = {
     title: {
@@ -25,7 +26,11 @@ const styles = {
     card: {
         marginTop: 10,
         marginBottom: 10
-    }
+    },
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    },
 };
 
 class Post extends React.Component {
@@ -114,6 +119,19 @@ class Post extends React.Component {
         );
     }
 
+    renderImages = () => {
+        const {images, classes} = this.props;
+
+        return images.map((image, key) => {
+            return <CardMedia
+                key={key}
+                className={classes.media}
+                image={image.path}
+                title={image.name}
+            />;
+        });
+    }
+
     render() {
         const {animationDelay, withAnimation, created_at, classes} = this.props;
         const {categories} = this.state;
@@ -126,6 +144,7 @@ class Post extends React.Component {
             animationClass,
             classes.card,
         ];
+
 
         return (
             <Card className={cardClass.join(" ")}>
@@ -149,6 +168,8 @@ class Post extends React.Component {
                     {this.renderText()}
                 </CardText>
 
+                {this.renderImages()}
+
                 <CardText>
                     <Typography className={classes.footer} color="textSecondary">
                         {categories.join(", ")}
@@ -166,6 +187,7 @@ function mapStateToProps(state) {
 Post.propTypes = {
     id: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
+    images: PropTypes.array,
     classes: PropTypes.object.isRequired,
 };
 

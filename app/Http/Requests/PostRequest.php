@@ -27,8 +27,8 @@ class PostRequest extends FormRequest
     {
         return [
             Post::FIELD__CONTENT => 'required|max:500',
-            Category::PLURAL     => 'string',
-            "photo"              => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024'
+            Category::PLURAL     => 'array',
+//            "photo"              => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024'
         ];
     }
 }

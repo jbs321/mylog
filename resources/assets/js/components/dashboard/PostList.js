@@ -28,6 +28,7 @@ class PostList extends React.Component {
             list.unshift(
                 <Post {...post}
                       key={post.id}
+                      images={post.post_images}
                       categories={post.categories}
                       withAnimation={hasAnimation}
                       animationDelay={`delay-${seconds}`}/>

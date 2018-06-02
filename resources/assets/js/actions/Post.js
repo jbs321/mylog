@@ -44,33 +44,31 @@ export function findNextPagination(pagination, cb) {
 }
 
 export function createUserPost(post, cb) {
-    const formData = new FormData();
-    const {content, categories, photo} = post;
+    const {content, categories, photos} = post;
 
-    console.log(categories);
-
-    formData.append('photo', photo, photo.name);
-    formData.append('content', content);
-    formData.append('categories', categories);
-
-
-    let config = {
-        headers: {'Content-Type': 'multipart/form-data'},
-        onUploadProgress: function (progressEvent) {
-            let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            console.log(percentCompleted);
-        }
-    };
-
-    // const request = axios.post("/api/post/store", formData, config);
-
-    const request = axios({
-        method: "POST",
-        url: `/api/post/store`,
-        data: formData,
+    const request = axios.post("/api/post/store", {
+        content: content,
+        categories: categories,
     });
 
-    request.then((result) => cb(result));
+    request.then(result => {
+        const {data} = result;
+        cb(data);
+
+        let fb = new FormData();
+        fb.append("num_photos", photos.length);
+
+        photos.forEach((photo, idx) => {
+            fb.append(`photo${idx}`, photo);
+        });
+
+        axios.post(`/api/posts/${data.id}/uploadImages`, fb, {
+            onUploadProgress: function (progressEvent) {
+                let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                console.log(percentCompleted);
+            }
+        });
+    });
 
     return {
         type: POST_CREATE_POST,

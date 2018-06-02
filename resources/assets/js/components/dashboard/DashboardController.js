@@ -10,7 +10,7 @@ import {withStyles} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import LabelIcon from '@material-ui/icons/Label';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import CardMedia from '@material-ui/core/CardMedia';
+import FileUpload from "../fileUpload/FileUpload";
 
 const styles = theme => ({
     paperClass: {
@@ -33,24 +33,16 @@ const styles = theme => ({
 });
 
 class DashboardController extends React.Component {
-    constructor() {
-        super();
-        this.state = {};
-        this.state.chips = [];
-        this.state.post_text = "";
-        this.state.imagePreviewUrl = "";
-        this.state.selectedFile = null;
-        this.state.displayCategory = false;
 
-        this.handleClick = this.handleClick.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.renderPlaceholder = this.renderPlaceholder.bind(this);
-        this.toggleCategories = this.toggleCategories.bind(this);
-        this.fileChangedHandler = this.fileChangedHandler.bind(this);
-        this.renderMedia = this.renderMedia.bind(this);
-    }
+    state = {
+        chips: [],
+        post_text: "",
+        uploadImages: false,
+        uploaded: [],
+        displayCategory: false,
+    };
 
-    renderPlaceholder() {
+    renderPlaceholder = () => {
         const {user: {name}} = this.props;
         let ph = "What's on your mind";
 
@@ -61,16 +53,11 @@ class DashboardController extends React.Component {
         return ph;
     }
 
-    toggleCategories() {
-        const {displayCategory} = this.state;
-        this.setState({
-            displayCategory: !displayCategory
-        });
-    }
 
 
-    handleClick() {
-        const {post_text, chips, selectedFile} = this.state;
+
+    submitPost = () => {
+        const {post_text, chips, uploaded} = this.state;
 
         if (post_text === undefined || post_text === "") {
             return null;
@@ -81,62 +68,83 @@ class DashboardController extends React.Component {
         this.props.createUserPost({
             content: post_text,
             categories: chips,
-            photo: selectedFile,
+            photos: uploaded,
         }, (data) => {
             that.setState({
                 chips: [],
                 post_text: "",
+                uploadImages: false,
                 displayCategory: false,
             });
         });
     }
 
-    handleInputChange(evt) {
+    handleInputChange = (evt) => {
         this.setState({[evt.target.name]: evt.target.value});
     }
 
-    fileChangedHandler(event) {
-        let reader = new FileReader();
-        const file = event.target.files[0];
-        let that = this;
+    toggleCategories = () => {
+        const {displayCategory} = this.state;
 
-        if (file === undefined) {
-            throw new Error("File missing");
+        //clear selection
+        if(displayCategory) {
+            this.setState({chips: []});
         }
 
+        //hide/display
         this.setState({
-            selectedFile: file,
-            imagePreviewUrl: URL.createObjectURL(file)
+            displayCategory: !displayCategory
         });
     }
 
-    renderMedia() {
-        const {imagePreviewUrl} = this.state;
-        const {classes} = this.props;
+    toggleUpload = () => {
+        const {uploadImages} = this.state;
 
-        if (imagePreviewUrl === "") {
+        //clear selection
+        if(uploadImages) {
+            this.setState({uploaded: []});
+        }
+
+        //hide/show
+        this.setState({uploadImages: !uploadImages});
+    };
+
+    renderCategoryController = () => {
+        const {displayCategory} = this.state;
+
+        if (!displayCategory) {
             return null;
         }
 
         return (
-            <CardMedia
-                className={classes.media}
-                image={imagePreviewUrl}
-                title="Title"
-            />
-        );
-    }
-
-    render() {
-        const {classes} = this.props;
-        const {post_text, displayCategory} = this.state;
-
-        const postCategoriesController = (displayCategory)
-            ? <CategoryController onCreate={(chips) => {
+            <CategoryController onCreate={(chips) => {
                 this.setState({
                     chips: chips
                 });
-            }}/> : null;
+            }}/>
+        );
+    };
+
+    renderImageUploadController = () => {
+        let that = this;
+        const {uploadImages, uploaded} = this.state;
+
+        if (!uploadImages) {
+            return null;
+        }
+
+        return (
+            <FileUpload
+                images={uploaded}
+                onChange={(uploaded) => {
+                    that.setState({uploaded: uploaded});
+                }}/>
+        );
+    };
+
+    render() {
+        const {classes} = this.props;
+        const {post_text} = this.state;
 
         return (
             <div>
@@ -153,27 +161,22 @@ class DashboardController extends React.Component {
                             multiLine={true}/>
                     </CardText>
 
-                    <CardText>
-                        {postCategoriesController}
-                    </CardText>
 
-                    {this.renderMedia()}
+                    {this.renderCategoryController()}
+
+                    {this.renderImageUploadController()}
 
                     <CardActions>
-                        <FlatButton label="Post" onClick={this.handleClick}/>
+                        <FlatButton label="Post" onClick={this.submitPost}/>
 
                         <IconButton color="primary" aria-label="Add Category" onClick={this.toggleCategories}>
                             <LabelIcon/>
                         </IconButton>
 
-
-                        <input accept="image/*" className={classes.input} id="icon-button-file"
-                               onChange={this.fileChangedHandler} type="file"/>
-                        <label htmlFor="icon-button-file">
-                            <IconButton color="primary" className={classes.button} component="span">
-                                <PhotoCamera/>
-                            </IconButton>
-                        </label>
+                        <IconButton color="primary" className={classes.button} component="span"
+                                    onClick={this.toggleUpload}>
+                            <PhotoCamera/>
+                        </IconButton>
                     </CardActions>
                 </Card>
             </div>
